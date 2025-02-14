@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<robot name="robot_name" xmlns:xacro="http://ros.org/wiki/xacro">
+    <link name="base_link"/>
+
+    <joint name="base_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="body"/>
+        <origin xyz="0 0 0" rpy="${pi} 0 0"/>
+    </joint>
+
+    <link name="body">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://hexapod_description/meshes/thorax.STL" scale="1.0 1.0 1.0"/>
+            </geometry>
+            <material name="grey">
+        			<color rgba="0.5 0.5 0.5 1" />
+      		</material>
+        </visual>
+
+		<inertial>
+			<origin rpy="0 0 0" xyz="0.000000 0.000000 0.000000"/>
+			<mass value="0.01"/>
+			<inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+		</inertial>
+    </link>
+
+    <xacro:macro name="leg" params="side num x y ang">
+
+        <joint name="leg_joint_${side}${num}" type="fixed">
+            <parent link="body"/>
+            <child link="leg_centre_${side}${num}"/>
+            <origin xyz="${x} ${y} 0.0" rpy="0.0 0.0 0.0"/>
+        </joint>
+
+        <link name="leg_centre_${side}${num}">
+            <inertial>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <mass value="0.01"/>
+                <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+            </inertial>
+        </link>
+
+        <joint name="coxa_joint_${side}${num}" type="revolute">
+            <parent link="leg_centre_${side}${num}"/>
+            <child link="coxa_${side}${num}"/>
+            <axis xyz="0 0 -1"/>
+            <limit lower="-1.5" upper="1.5" velocity="100.0" effort="1000.0"/>
+            <origin xyz="0 0 0" rpy="0 0 ${ang}"/>
+        </joint>
+
+        <link name="coxa_${side}${num}">
+            <inertial>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <mass value="0.01"/>
+                <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+            </inertial>
+
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="package://hexapod_description/meshes/coxa_${side}.STL" scale="1.0 1.0 1.0"/>
+                </geometry>
+                <material name="">
+                    <color rgba="0.7 0.0 0.1"/>
+                </material>
+            </visual>
+        </link>
+
+        <joint name="femur_joint_${side}${num}" type="revolute">
+            <parent link="coxa_${side}${num}"/>
+            <child link="femur_${side}${num}"/>
+            <axis xyz="0 0 -1"/>
+            <limit lower="-1.5" upper="1.5" velocity="100.0" effort="1000.0"/>
+            <origin xyz="0.0294 0 0" rpy="-1.57 0 0"/>
+        </joint>
+        
+        <link name="femur_${side}${num}">
+            <inertial>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <mass value="0.001"/>
+                <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+            </inertial>
+            <visual name="">
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="package://hexapod_description/meshes/femur_${side}.STL" />
+                </geometry>
+                <material name="">
+                    <color rgba="0 0.7 0.7 1.0"/>
+                </material>
+            </visual>
+        </link>
+
+        <joint name="tibia_joint_${side}${num}" type="revolute">
+            <origin xyz="0.08 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <parent link="femur_${side}${num}"/>
+            <child link="tibia_${side}${num}"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="-1.5" upper="1.5" velocity="100.0" effort="1000.0"/>
+        </joint>
+
+        <link name="tibia_${side}${num}">
+            <inertial>
+                <origin xyz="0.117 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <mass value="0.01"/>
+                <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+            </inertial>
+            <visual name="">
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.06"/>
+                <geometry>
+                    <mesh filename="package://hexapod_description/meshes/tibia_${side}.STL" scale="1.0 1.0 1.0"/>
+                </geometry>
+                <material name="">
+                    <color rgba="0 0.7 0.7 1.0"/>
+                </material>
+            </visual>
+        </link>
+
+        <joint name="tibia_foot_joint_${side}${num}" type="fixed">
+    		<origin xyz="0.117 0 0" rpy="0 0 0" />
+    		<parent link="tibia_${side}${num}" />
+    		<child link="tibia_foot_${side}${num}" />
+  	    </joint>
+
+        <link name="tibia_foot_${side}${num}">
+		    <inertial>
+			    <origin rpy="0 0 0" xyz="0.000000 0.000000 0.000000"/>
+			    <mass value="0.01"/>
+			    <inertia 	ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+		    </inertial>
+  	    </link>
+        
+    </xacro:macro>
+
+    <xacro:property name="pi" value="3.1415926535897931" />
+
+    <xacro:leg side="r" num="1" x="0.087598" 	y="-0.050575" 	ang="-${pi/3}" />
+	<xacro:leg side="r" num="2" x="0" 		y="-0.06985" 	ang="-${pi/2}" />
+	<xacro:leg side="r" num="3" x="-0.087598" 	y="-0.050575" 	ang="-${pi*2/3}" />
+	<xacro:leg side="l" num="1" x="0.087598" 	y="0.050575"	ang="${pi/3}" />
+	<xacro:leg side="l" num="2" x="0" 		y="0.06985"	ang="${pi/2}" />
+	<xacro:leg side="l" num="3" x="-0.087598" 	y="0.050575" 	ang="${pi*2/3}" />
+
+</robot>
