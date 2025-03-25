@@ -1,0 +1,54 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 100
+    use_sime_time: true
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    joint_controller:
+      type: "position_controllers/JointGroupPositionController"
+
+joint_state_broadcaster:
+  ros__parameters:
+    joints:
+      - coxa_joint_l1
+      - femur_joint_l1
+      - tibia_joint_l1
+      - coxa_joint_r1
+      - femur_joint_r1
+      - tibia_joint_r1
+      - coxa_joint_l2
+      - femur_joint_l2
+      - tibia_joint_l2
+      - coxa_joint_r2
+      - femur_joint_r2
+      - tibia_joint_r2
+      - coxa_joint_l3
+      - femur_joint_l3
+      - tibia_joint_l3
+      - coxa_joint_r3
+      - femur_joint_r3
+      - tibia_joint_r3
+
+joint_controller:
+  ros__parameters:
+    joints:
+      - coxa_joint_l1
+      - femur_joint_l1
+      - tibia_joint_l1
+      - coxa_joint_r1
+      - femur_joint_r1
+      - tibia_joint_r1
+      - coxa_joint_l2
+      - femur_joint_l2
+      - tibia_joint_l2
+      - coxa_joint_r2
+      - femur_joint_r2
+      - tibia_joint_r2
+      - coxa_joint_l3
+      - femur_joint_l3
+      - tibia_joint_l3
+      - coxa_joint_r3
+      - femur_joint_r3
+      - tibia_joint_r3

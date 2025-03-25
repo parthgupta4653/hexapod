@@ -39,6 +39,6 @@ def generate_launch_description():
             executable='rviz2',
             name='rviz2',
             output='screen',
-            arguments=['-d', os.path.join(get_package_share_directory('hexapod_description'), 'rviz', 'display_model.rviz')]
+            arguments=['-d', os.path.join(get_package_share_directory('hexapod_description'), 'rviz', 'model.rviz')]
         )
     ])
