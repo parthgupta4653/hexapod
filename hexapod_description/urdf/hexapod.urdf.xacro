@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<robot name="hexapod" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find hexapod_description)/urdf/common_properties.xacro"/>
+    <xacro:include filename="$(find hexapod_description)/urdf/links.xacro"/>
+    <xacro:include filename="$(find hexapod_description)/urdf/gazebo.xacro"/>
+
+</robot>

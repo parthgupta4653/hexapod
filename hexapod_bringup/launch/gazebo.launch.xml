@@ -1,0 +1,17 @@
+<launch>
+    <node pkg="robot_state_publisher" exec="robot_state_publisher">
+        <param name="robot_description" value="$(command 'xacro $(find-pkg-share hexapod_description)/urdf/hexapod.urdf.xacro')" />
+    </node>
+
+    <include file="$(find-pkg-share ros_gz_sim)/launch/gz_sim.launch.py">
+        <arg name="gz_args" value="-r -v4 $(find-pkg-share hexapod_bringup)/worlds/hexapod_world.sdf" />
+    </include>
+
+    <node pkg="ros_gz_sim" exec="create" args="-topic robot_description" />
+
+    <node pkg="rviz2" exec="rviz2" args="-d $(find-pkg-share hexapod_description)/rviz/model.rviz" />
+
+    <node pkg="ros_gz_bridge" exec="parameter_bridge">
+        <param name="config_file" value="$(find-pkg-share hexapod_bringup)/config/gazebo_bridge.yaml" />
+    </node>
+</launch>
