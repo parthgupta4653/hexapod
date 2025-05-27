@@ -3,4 +3,34 @@
     <gazebo>
         <plugin filename="gz-sim-joint-state-publisher-system" name="gz::sim::systems::JointStatePublisher"/>
     </gazebo>
+
+    <xacro:macro name="joint_position_controller" params="joint_name initial_position">
+        <gazebo>
+            <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+                <joint_name>${joint_name}</joint_name>
+                <initial_position>${initial_position}</initial_position>
+                <p_gain>100.0</p_gain>
+                <d_gain>0.0</d_gain>
+                <i_gain>0.0</i_gain>
+            </plugin>
+        </gazebo>
+    </xacro:macro>
+    <xacro:joint_position_controller joint_name="coxa_joint_l1" initial_position="0.0"/>
+    <xacro:joint_position_controller joint_name="coxa_joint_l2" initial_position="0.0"/>
+    <xacro:joint_position_controller joint_name="coxa_joint_l3" initial_position="0.0"/>
+    <xacro:joint_position_controller joint_name="coxa_joint_r1" initial_position="0.0"/>
+    <xacro:joint_position_controller joint_name="coxa_joint_r2" initial_position="0.0"/>
+    <xacro:joint_position_controller joint_name="coxa_joint_r3" initial_position="0.0"/>
+    <xacro:joint_position_controller joint_name="femur_joint_l1" initial_position="0.0"/>
+    <xacro:joint_position_controller joint_name="femur_joint_l2" initial_position="0.0"/>
+    <xacro:joint_position_controller joint_name="femur_joint_l3" initial_position="0.0"/>
+    <xacro:joint_position_controller joint_name="femur_joint_r1" initial_position="0.0"/>
+    <xacro:joint_position_controller joint_name="femur_joint_r2" initial_position="0.0"/>
+    <xacro:joint_position_controller joint_name="femur_joint_r3" initial_position="0.0"/>
+    <xacro:joint_position_controller joint_name="tibia_joint_l1" initial_position="0.0"/>
+    <xacro:joint_position_controller joint_name="tibia_joint_l2" initial_position="0.0"/>
+    <xacro:joint_position_controller joint_name="tibia_joint_l3" initial_position="0.0"/>
+    <xacro:joint_position_controller joint_name="tibia_joint_r1" initial_position="0.0"/>
+    <xacro:joint_position_controller joint_name="tibia_joint_r2" initial_position="0.0"/>
+    <xacro:joint_position_controller joint_name="tibia_joint_r3" initial_position="0.0"/>
 </robot>
